@@ -6,6 +6,13 @@ local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
 
+function dump(o) 
+    for i,v in pairs(o) do
+        print(i,v)
+    end
+end
+
+
 font = love.graphics.newFont("/assets/uni0553-webfont.ttf")
 love.graphics.setFont(font)
 

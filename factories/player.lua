@@ -8,6 +8,11 @@ return function (joyrecord,x,y)
     player.x = x
     player.y = y
     player.z = 0
+    
+    player.collides = true
+    player.pw = 24
+    player.px = 32
+
     player.health = 3
     player.stamina = 3
     player.inactivity = 0
@@ -65,16 +70,12 @@ return function (joyrecord,x,y)
         self.inactivity = self.inactivity + dt
         walk_movement(self, dt)
         if self.joy:isGamepadDown("x") then
-            self:setstate("elbow1")
         end
         if self.joy:isGamepadDown("y") then
-            self:setstate("uppercut1")
         end
         if self.joy:isGamepadDown("a") then
-            self:setstate("kick1")
         end
         if self.joy:isGamepadDown("b") then
-            self:setstate("punch1")
         end
 
         if self.joy:isGamepadDown("leftshoulder", "rightshoulder") then
