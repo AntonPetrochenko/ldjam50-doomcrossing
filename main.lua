@@ -1,10 +1,18 @@
 sounds = require 'sounds'
 sharedstates = require 'sharedstates'
-world = require 'oo'
+worldMaker = require 'oo'
+
+world = worldMaker()
+rumbles = worldMaker()
+
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
+
+function point_direction(x1,y1,x2,y2)
+    return math.atan2(y2-y1,x2-x1)
+end
 
 function dump(o) 
     for i,v in pairs(o) do
@@ -116,7 +124,7 @@ for i,v in ipairs(love.joystick.getJoysticks()) do
     joysticks[i] = {
         available = true,
         instance = v,
-        playerobj = false,
+        playerobj = false
     }
 end
 
@@ -127,13 +135,6 @@ end
 function love.update(dt)
     if love.keyboard.isDown('q') then
         debug.debug()
-    end
-
-    if love.keyboard.isDown("a") then
-        world:add(player_factory(100,100))
-    end
-    if love.keyboard.isDown("d") then
-        world:del(p)
     end
     for i,v in pairs(joysticks) do
         if v.available and v.instance:isGamepadDown("start") then

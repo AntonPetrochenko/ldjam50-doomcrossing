@@ -1,5 +1,8 @@
+bullet = require 'factories.bullet'
+
 return function (joyrecord,x,y)
     local player = {}
+
     print(love.filesystem.getWorkingDirectory())
 
     player.team = 0
@@ -9,17 +12,34 @@ return function (joyrecord,x,y)
     player.y = y
     player.z = 0
     
+    player.shoot_x = 24/2
+    player.shoot_y = 32/2
+
     player.collides = true
     player.pw = 24
     player.ph = 32
+
+    player.fire_timer = -0.1
 
     player.health = 3
     player.stamina = 3
     player.inactivity = 0
     player.score = 0
 
-    player.on_collision = function (self, other) 
-        return 'slide'
+    player.weapon = {
+        impulse = 5,
+        damping = 0.96,
+
+        spread = 3,
+        spray = 1,
+
+        number = 10,
+        damage = 1,
+
+        rate = 1
+    }
+
+    player.on_collision = function (self, other)
     end
 
     player.isplayer = true
@@ -55,12 +75,6 @@ return function (joyrecord,x,y)
 
     local function walk_movement(self, dt)
         local ax1, ax2, ax3, ax4, ax5, ax6 = self.joy:getAxes()
-        print(
-            string.format("%.3f %.3f %.3f %.3f %.3f %.3f",
-                
-            ax1, ax2, ax3, ax4, ax5, ax6)
-            
-        )
         if math.abs(ax1) < 0.2 then ax1 = 0 end
         if math.abs(ax2) < 0.2 then ax2 = 0 end
 
@@ -77,10 +91,39 @@ return function (joyrecord,x,y)
         self.finalize_motion()
     end
 
+    local function aim_and_shoot(self, dt)
+        local ax1, ax2, ax3, ax4, ax5, ax6 = self.joy:getAxes()
+
+        player.fire_timer = player.fire_timer + dt
+        if player.fire_timer > 0 then
+            if ax6 > -0.5 then
+                player.fire_timer = -self.weapon.rate
+
+                for i=0,self.weapon.number do 
+                    local target_x = self.x + ax4
+                    local target_y = self.y + ax5
+
+                    local self_x = self.x
+                    local self_y = self.y
+
+                    local aim_angle = math.atan2(target_y-self_y,target_x-self_x)
+                    local spread_angle = aim_angle + (math.random()-0.5)*self.weapon.spray
+                    local spread_velocity = self.weapon.impulse - math.random()*self.weapon.spread
+
+
+                    world:add(bullet(self.x+self.shoot_x, self.y+self.shoot_y, spread_velocity, self.weapon.damping, spread_angle))
+                end
+            end
+        end
+
+        self.joy:setVibration(ax6)
+    end
+
     -- state normal
     function player.update_states.normal(self, dt)
         self.inactivity = self.inactivity + dt
         walk_movement(self, dt)
+        aim_and_shoot(self, dt)
         if self.joy:isGamepadDown("x") then
         end
         if self.joy:isGamepadDown("y") then
@@ -114,7 +157,7 @@ return function (joyrecord,x,y)
         self.inactivity = 0
         if self.update_states[newstate] then 
             print("CHANGIN STATE!!11 " .. newstate)
-            self.current_update_state = self.update_states[newstate] 
+            self.current_update_state = self.update_states[newstate]
             self.current_draw_state = self.draw_states[newstate]
         else 
             print("BAD STATAE " .. newstate)
@@ -131,7 +174,7 @@ return function (joyrecord,x,y)
             self.x = 600
         end
         if self.y < 110 then
-            self.y = 110
+            self.y = 110 
         end
         if self.y > 160 then
             self.y = 160
@@ -153,6 +196,5 @@ return function (joyrecord,x,y)
         end 
         self:current_draw_state(dx,dy,dz,f,ox)
     end
-
     return player
 end
