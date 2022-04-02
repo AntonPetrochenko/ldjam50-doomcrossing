@@ -118,6 +118,10 @@ function love.load()
 end
 
 function love.update(dt)
+    if love.keyboard.isDown('q') then
+        debug.debug()
+    end
+
     if love.keyboard.isDown("a") then
         world:add(player_factory(100,100))
     end
@@ -130,6 +134,7 @@ function love.update(dt)
             local np = player_factory(v,spawnpos,100)
             v.player = np
             world:add(np)
+            print('foo)')
             sound_player_join:play()
             v.playerobj = np
             np.team = i
