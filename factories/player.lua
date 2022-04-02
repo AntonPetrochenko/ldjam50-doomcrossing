@@ -18,6 +18,10 @@ return function (joyrecord,x,y)
     player.inactivity = 0
     player.score = 0
 
+    player.on_collision = function (self, other) 
+        return 'slide'
+    end
+
     player.isplayer = true
 
     
@@ -50,7 +54,13 @@ return function (joyrecord,x,y)
     player.draw_states = sharedstates.create_draw_states()
 
     local function walk_movement(self, dt)
-        local ax1, ax2 = self.joy:getAxes()
+        local ax1, ax2, ax3, ax4, ax5, ax6 = self.joy:getAxes()
+        print(
+            string.format("%.3f %.3f %.3f %.3f %.3f %.3f",
+                
+            ax1, ax2, ax3, ax4, ax5, ax6)
+            
+        )
         if math.abs(ax1) < 0.2 then ax1 = 0 end
         if math.abs(ax2) < 0.2 then ax2 = 0 end
 
@@ -63,6 +73,8 @@ return function (joyrecord,x,y)
         if math.abs(ax1) > 0.2 then
             self.inactivity = 0
         end
+
+        self.finalize_motion()
     end
 
     -- state normal
