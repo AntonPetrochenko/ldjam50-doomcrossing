@@ -29,6 +29,7 @@ return function (joyrecord,x,y)
     player.weapon = {
         impulse = 5,
         damping = 0.96,
+        cut = 5,
 
         spread = 3,
         spray = 1,
@@ -111,7 +112,7 @@ return function (joyrecord,x,y)
                     local spread_velocity = self.weapon.impulse - math.random()*self.weapon.spread
 
 
-                    world:add(bullet(self.x+self.shoot_x, self.y+self.shoot_y, spread_velocity, self.weapon.damping, spread_angle))
+                    world:add(bullet(self.x+self.shoot_x, self.y+self.shoot_y, spread_velocity, self.weapon.damping, spread_angle, self.weapon.cut))
                 end
             end
         end
@@ -125,12 +126,64 @@ return function (joyrecord,x,y)
         walk_movement(self, dt)
         aim_and_shoot(self, dt)
         if self.joy:isGamepadDown("x") then
+            player.weapon = {
+                impulse = 5,
+                damping = 0.96,
+                cut = 5,
+        
+                spread = 3,
+                spray = 1,
+        
+                number = 10,
+                damage = 1,
+        
+                rate = 1
+            }
         end
         if self.joy:isGamepadDown("y") then
+            player.weapon = {
+                impulse = 5,
+                damping = 1,
+                cut = 0.15,
+        
+                spread = 1,
+                spray = 0.1,
+        
+                number = 0,
+                damage = 1,
+        
+                rate = 0.1
+            }
         end
         if self.joy:isGamepadDown("a") then
+            player.weapon = {
+                impulse = 5,
+                damping = 1,
+                cut = 0.1,
+        
+                spread = 3,
+                spray = 1,
+        
+                number = 10,
+                damage = 1,
+        
+                rate = 1
+            }
         end
         if self.joy:isGamepadDown("b") then
+            player.weapon = {
+                impulse = 5,
+                damping = 0.96,
+                cut = 3,
+        
+                spread = 1,
+                spray = 0.1,
+        
+                number = 0,
+                damage = 1,
+        
+                rate = 0.1
+            }
         end
 
         if self.joy:isGamepadDown("leftshoulder", "rightshoulder") then
