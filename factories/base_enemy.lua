@@ -32,10 +32,12 @@ return function (x,y)
     local min = 100000000000000000000
     local cords = {}
     for i,v in pairs(joysticks) do
-      distance = math.sqrt( math.pow((enemy.x - v.playerobj.x), 2) + math.pow((enemy.y - v.playerobj.y), 2) )
-      if v.availability == false and distance < min then
-        min = distance
-        cords = v.playerobj
+      if v.availability == false then
+        distance = math.sqrt( math.pow((enemy.x - v.playerobj.x), 2) + math.pow((enemy.y - v.playerobj.y), 2) )
+        if distance < min then
+          min = distance
+          cords = v.playerobj
+        end
       end
     end
     return cords
