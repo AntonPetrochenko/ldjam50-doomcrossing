@@ -11,7 +11,7 @@ return function (joyrecord,x,y)
     
     player.collides = true
     player.pw = 24
-    player.px = 32
+    player.ph = 32
 
     player.health = 3
     player.stamina = 3

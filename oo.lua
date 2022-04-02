@@ -22,24 +22,24 @@ local world = {
         local o = self.objects
         local newid = love.math.random(999999999)
 
-        if new.collides then {
-            physicsWorld.add(new, new.x, new.y, new.pw, new.ph)
+        if new.collides then
+            physicsWorld:add(new, new.x, new.y, new.pw, new.ph)
 
             new.touching = function (target_type)
-                physicsWorld:queryRect(new.x-1,new.y-1,new.pw+2,new.ph+2, function (item) {
-                    local notme = item.myid != newid
+                physicsWorld:queryRect(new.x-1,new.y-1,new.pw+2,new.ph+2, function (item)
+                    local notme = item.myid ~= newid
                     local istype = item.collision_type == target_type
-                })
+                end)
             end
 
             new.finalize_motion = function (x,y)
                 local actualX, actualY = physicsWorld:move(new, new.x, new.y, function (item, other) 
-                    other:on_collision(item)
-                    return 'touch' 
+                    return other:on_collision(item)
                 end )
                 new.x, new.y = actualX, actualY
             end
-        }
+
+        end
         
 
 
