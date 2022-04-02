@@ -9,6 +9,7 @@ hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
+local enemy_factory = require 'factories.bird_enemy'
 
 function point_direction(x1,y1,x2,y2)
     return math.atan2(y2-y1,x2-x1)
@@ -135,6 +136,9 @@ end
 function love.update(dt)
     if love.keyboard.isDown('q') then
         debug.debug()
+    end
+    if love.keyboard.isDown('9') then
+        world:add(enemy_factory())
     end
     for i,v in pairs(joysticks) do
         if v.available and v.instance:isGamepadDown("start") then
