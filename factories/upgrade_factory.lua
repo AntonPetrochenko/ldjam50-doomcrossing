@@ -97,10 +97,10 @@ return function(x,y,type)
   new_upgrade.type = type
 
   new_upgrade.collides = true
-  new_upgrade.pw = 8
-  new_upgrade.ph = 8
+  new_upgrade.pw = 24
+  new_upgrade.ph = 24
   new_upgrade.on_collision = function (self, other)
-    if other.isplayer then
+    if other.isplayer and other.wpnbonustimer < 0 then
       fupgrades[type](other)
       world:del(self)
     end

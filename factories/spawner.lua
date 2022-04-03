@@ -5,8 +5,8 @@ local bottom_border = 180
 local gameTimer = 0
 
 local enemy_spawnTimer = 0
-local enemy_spawnrate_inc = 0.99
-local enemy_spawnDuration = 10
+local enemy_spawnrate_inc = 0.96
+local enemy_spawnDuration = 5
 local enemy_1_factory = require 'factories.player_xy_enemy'
 local enemy_2_factory = require 'factories.ebabat_enemy'
 local enemy_3_factory = require 'factories.random_xy_enemy'
