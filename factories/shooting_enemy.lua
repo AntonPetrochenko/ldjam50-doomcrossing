@@ -12,7 +12,7 @@ return function (...)
   function new_enemy.timer_action(self)
     self.speed = 0.5
     self.action_timer = 0.5
-    if math.random() > 0.8 then
+    if math.random(0, 100) > 80 then
       self.delta_x = 0
       self.delta_y = 0
     else

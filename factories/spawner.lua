@@ -36,7 +36,6 @@ local function spawn()
     elseif hui == 4 then
         spawn_enemy_4()
     end
-            
 end
 
 return {
@@ -50,6 +49,7 @@ return {
 
         if love.keyboard.isDown('9') then
             spawn()
+        end
         if love.keyboard.isDown('1') then
             spawn_enemy_1()
         end
@@ -65,11 +65,5 @@ return {
     end,
     restart = function()
         gameTimer = 0
-    end,
-
-    fuck = '2423',
-
-    asdasd = function()
-
     end
 }
