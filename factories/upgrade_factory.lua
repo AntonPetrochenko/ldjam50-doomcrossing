@@ -8,7 +8,7 @@ drawables = {
 
 
 
-local shotgun = {
+local function shotgun() return {
     impulse = 5,
     damping = 0.96,
     cut = 5,
@@ -25,9 +25,9 @@ local shotgun = {
     rumble_duration = 0.5,
 
     spread_amount = 0.3
-}
+} end
 
-local minigun = {
+local function minigun() return {
     impulse = 7,
     damping = 1,
     cut = 0.1,
@@ -43,7 +43,7 @@ local minigun = {
     rumble_duration = 0.1,
 
     spread_amount = 1.4
-  }
+  } end
 
 local function set_all_values(source,target)
   for index, value in pairs(source) do
@@ -52,26 +52,38 @@ local function set_all_values(source,target)
 end
 
 local fupgrades = {
-  double = function(weapon)
+  double = function(player)
+    local weapon = player.weapon
     weapon.spray = weapon.spray * weapon.spread_amount
     weapon.number = weapon.number + 1
     weapon.rate = weapon.rate * 1.3
   end,
-  rate = function(weapon)
+  rate = function(player)
+    local weapon = player.weapon
     weapon.spray = weapon.spray * 1.2
     weapon.rate = weapon.rate * 0.9
     weapon.spread = weapon.spread * weapon.spread_amount
   end,
-  far = function(weapon)
+  far = function(player)
+    local weapon = player.weapon
     weapon.spray = weapon.spray * 0.8
     weapon.rate = weapon.rate * 0.9
     weapon.spread = weapon.spread * weapon.spread_amount
   end,
-  minigun = function(weapon)
-    set_all_values(minigun, weapon)
+  minigun = function(player)
+    local weapon = player.weapon
+
+    player.stash = player.weapon
+    player.weapon = minigun()
+    player.wpnbonustimer = 5
   end,
-  shotgun = function(weapon)
-    set_all_values(shotgun, weapon)
+  shotgun = function(player)
+    local weapon = player.weapon
+
+    player.stash = player.weapon
+    player.weapon = shotgun()
+    player.wpnbonustimer = 10
+    
   end
 }
 
@@ -89,12 +101,24 @@ return function(x,y,type)
   new_upgrade.ph = 8
   new_upgrade.on_collision = function (self, other)
     if other.isplayer then
-      fupgrades[type](other.weapon)
+      fupgrades[type](other)
       world:del(self)
     end
   end
 
   new_upgrade.update = function (self, dt)
+    if self.x < -140 then
+      self.x = -140
+  end
+  if self.x > 600 then
+      self.x = 600
+  end
+  if self.y < 110 then
+      self.y = 110 
+  end
+  if self.y > 160 then
+      self.y = 160
+  end
     self:finalize_motion()
   end
 

@@ -1,10 +1,14 @@
 local base_enemy = require('factories.base_enemy')
 local enemy_bullet = require 'factories.enemy_bullet'
 
+local drawable = love.graphics.newImage('/assets/shooter.png')
+
 return function (...)
   local new_enemy = base_enemy(...)
 
   new_enemy.class = 'random_user_xy'
+  new_enemy.pw = 25
+  new_enemy.ph = 29
 
   new_enemy.shoot_x = 24/2
   new_enemy.shoot_y = 32/2
@@ -30,6 +34,10 @@ return function (...)
     self:walk_movement(dt)
   end 
 
+  function new_enemy.draw(self)
+    love.graphics.draw(drawable,self.x,self.y)
+  end
+
   function new_enemy.timer_action(self)
     self.speed = 0.5
     self.action_timer = 0.5
@@ -54,4 +62,5 @@ return function (...)
     end
   end
   return new_enemy
+  
 end

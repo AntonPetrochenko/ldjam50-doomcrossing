@@ -3,7 +3,10 @@ local base_enemy = require('factories.base_enemy')
 return function (...)
   local new_enemy = base_enemy(...)
 
+  local drawable = love.graphics.newImage('/assets/ebabat.png')
   new_enemy.class = 'ebabat'
+  new_enemy.pw = 29
+  new_enemy.ph = 17
 
   function new_enemy.extra_update(self, dt)
     self:walk_movement(dt)

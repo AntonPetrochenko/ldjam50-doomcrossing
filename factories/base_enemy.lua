@@ -6,7 +6,7 @@ return function (x,y)
   enemy.y = y
   enemy.z = 0
 
-  enemy.health = 5
+  enemy.health = 3
 
   enemy.is_enemy = true
 
@@ -18,8 +18,6 @@ return function (x,y)
 
   enemy.delta_x = 0
   enemy.delta_y = 0
-
-  enemy.on_collision = function () end
 
   enemy.action_timer = 1
 
@@ -48,7 +46,7 @@ return function (x,y)
     if self.health < 0 then
       world:del(self)
 
-      if math.random() < 0.1 then
+      if math.random() < 0.2 then
         local rnd_upg = {'far', 'rate', 'double', 'shotgun', 'minigun'}
         world:add(upgrade(self.x, self.y,rnd_upg[math.random(1,5)]))
       end
@@ -60,6 +58,23 @@ return function (x,y)
       other.is_bullet = false
       other.damping = 0.3
       self.health = self.health - 1
+    end
+
+    if other.is_player then
+
+      other.knockvx = self.delta_x
+      other.knockvz = 1
+
+      
+      other.stamina = other.stamina - 1
+      print(other.stamina .. '> 0', other.stamina > 0)
+      if other.stamina > 0 then
+        
+          other:setstate("hit1")
+      else
+          other:setstate("knockover")
+      end
+      world:del(self)
     end
   end
 

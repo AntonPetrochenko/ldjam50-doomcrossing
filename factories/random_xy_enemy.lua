@@ -1,13 +1,21 @@
 local base_enemy = require('factories.base_enemy')
 
+local drawable = love.graphics.newImage('/assets/random_xy.png')
+
 return function (...)
   local new_enemy = base_enemy(...)
 
   new_enemy.class = 'random_user_xy'
+  new_enemy.pw = 23
+  new_enemy.ph = 32
 
   function new_enemy.extra_update(self, dt)
     self:walk_movement(dt, 0.5)
   end 
+
+  function new_enemy.draw(self)
+    love.graphics.draw(drawable,self.x,self.y)
+  end
 
   function new_enemy.timer_action(self)
     self.action_timer = 5

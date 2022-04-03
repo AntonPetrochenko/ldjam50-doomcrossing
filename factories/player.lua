@@ -23,7 +23,7 @@ return function (joyrecord,x,y)
     player.fire_timer = -0.1
 
     player.health = 3
-    player.stamina = 3
+    player.stamina = 10
     player.inactivity = 0
     player.score = 0
 
@@ -45,10 +45,14 @@ return function (joyrecord,x,y)
         spread_amount = 1.2
     }
 
+
+    player.wpnbonustimer = 0
+
     player.on_collision = function (self, other)
     end
 
     player.isplayer = true
+    player.is_player = true
 
     
 
@@ -165,6 +169,15 @@ return function (joyrecord,x,y)
     player:setstate("normal")
 
     function player.update(self,dt)
+
+        player.wpnbonustimer = player.wpnbonustimer - dt
+
+        if (player.stash and player.wpnbonustimer < 0) then
+            print('bonus expired')
+            player.weapon = player.stash
+            player.stash = nil
+        end
+
         if self.x < -140 then
             self.x = -140
         end
