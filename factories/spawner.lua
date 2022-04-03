@@ -16,7 +16,12 @@ local function spawn_enemy_1()
     world:add(enemy_1_factory(math.random(left_border, right_border), bottom_border))
 end
 local function spawn_enemy_2()
-    world:add(enemy_2_factory(math.random(left_border, right_border), 130))
+    local hui = math.random( 0, 1)
+    if hui == 0 then
+        world:add(enemy_2_factory(left_border, 130))
+    else
+        world:add(enemy_2_factory(right_border, 130))
+    end
 end
 local function spawn_enemy_3()
     world:add(enemy_3_factory(math.random(left_border, right_border), bottom_border))
