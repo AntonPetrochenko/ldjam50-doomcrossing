@@ -1,8 +1,12 @@
+local upgrade = require 'factories.upgrade_factory'
+
 return function (x,y)
   local enemy = {}
   enemy.x = x
   enemy.y = y
   enemy.z = 0
+
+  enemy.health = 5
 
   enemy.is_enemy = true
 
@@ -39,6 +43,23 @@ return function (x,y)
     enemy.action_timer = enemy.action_timer - dt
     if enemy.action_timer < 0 then
       enemy:timer_action()
+    end
+
+    if self.health < 0 then
+      world:del(self)
+
+      if math.random() < 0.1 then
+        local rnd_upg = {'far', 'rate', 'double', 'shotgun', 'minigun'}
+        world:add(upgrade(self.x, self.y,rnd_upg[math.random(1,5)]))
+      end
+    end
+  end
+
+  function enemy.on_collision(self, other)
+    if other.is_bullet then
+      other.is_bullet = false
+      other.damping = 0.3
+      self.health = self.health - 1
     end
   end
 
