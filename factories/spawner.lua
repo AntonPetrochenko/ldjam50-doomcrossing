@@ -49,7 +49,11 @@ return {
         end
 
         if love.keyboard.isDown('9') then
+<<<<<<< HEAD
+            world:add(shooting_enemy_factory(100,100))
+=======
             spawn()
+>>>>>>> 5fa97975d96e712b41d1700e7dcec286dced9cb4
         end
     end,
     restart = function()
