@@ -7,11 +7,9 @@ spawner = require 'factories.spawner'
 
 world = worldMaker()
 
-for i=0,2 do world:add(upgrade(0+i*30,150,'shotgun')) end
-for i=3,5 do world:add(upgrade(0+i*30,150,'minigun')) end
-for i=6,9 do world:add(upgrade(0+i*30,150,'rate')) end
-for i=10,13 do world:add(upgrade(0+i*30,150,'double')) end
-for i=14,17 do world:add(upgrade(0+i*30,150,'far')) end
+world:add(upgrade(0,130,'shotgun'))
+
+world:add(upgrade(30,130,'minigun'))
 
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
