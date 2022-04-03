@@ -14,6 +14,8 @@ return function (x,y,vel, damping, angle, cut)
 
   new_bullet.vel = vel
 
+  new_bullet.is_bullet = true
+
   new_bullet.collides = true
   new_bullet.pw = 8
   new_bullet.ph = 8
@@ -49,7 +51,7 @@ return function (x,y,vel, damping, angle, cut)
 
     local length = 8 * (  math.log( math.pow(self.vel, 0.6)  ) + 1.5 )
 
-    love.graphics.draw(bullet_gradient, self.x, self.y, self.angle, length, 8, 0.5, 0.5 )
+    love.graphics.draw(bullet_gradient, self.x+4, self.y+4, self.angle, length, 8, 0.5, 0.5 )
   end
   return new_bullet
 end
