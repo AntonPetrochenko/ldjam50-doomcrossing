@@ -5,7 +5,7 @@ local bottom_border = 180
 local gameTimer = 0
 
 local enemy_spawnTimer = 0
-local enemy_spawnrate_inc = 0.8
+local enemy_spawnrate_inc = 0.95
 local enemy_spawnDuration = 10
 local enemy_1_factory = require 'factories.player_xy_enemy'
 local enemy_2_factory = require 'factories.ebabat_enemy'
@@ -48,8 +48,17 @@ return {
             spawn()
         end
 
-        if love.keyboard.isDown('9') then
-            spawn()
+        if love.keyboard.isDown('1') then
+            spawn_enemy_1()
+        end
+        if love.keyboard.isDown('2') then
+            spawn_enemy_2()
+        end
+        if love.keyboard.isDown('3') then
+            spawn_enemy_3()
+        end
+        if love.keyboard.isDown('4') then
+            spawn_enemy_4()
         end
     end,
     restart = function()
