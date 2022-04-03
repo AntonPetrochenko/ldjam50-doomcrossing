@@ -1,5 +1,7 @@
 local base_enemy = require('factories.base_enemy')
 
+local drawable = love.graphics.newImage('/assets/ebabat.png')
+
 local left_border = -140
 local right_border = 600
 local dir_right = false
@@ -12,6 +14,10 @@ return function (...)
   function new_enemy.extra_update(self, dt)
     self:walk_movement(dt)
   end 
+
+  function new_enemy.draw(self)
+    love.graphics.draw(drawable,self.x,self.y)
+  end
 
   function new_enemy.timer_action(self)
     self.speed = 0.5
