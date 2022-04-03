@@ -151,7 +151,7 @@ function love.update(dt)
         debug.debug()
     end
     gameTimer = gameTimer + dt
-    if gameTimer > 10 then
+    if gameTimer > 1 then
         spawner.update(dt)
     end
     for i,v in pairs(joysticks) do
