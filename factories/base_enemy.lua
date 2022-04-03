@@ -5,8 +5,17 @@ return function (x,y)
   enemy.z = 0
 
   enemy.collides = true
-  enemy.pw = 24
-  enemy.ph = 32
+  enemy.pw = 8
+  enemy.ph = 8
+
+  enemy.speed = 1
+
+  enemy.delta_x = 0
+  enemy.delta_y = 0
+
+  enemy.on_collision = function () end
+
+  enemy.action_timer = 1
 
   function enemy.nearestPlayer(self)
     local min = 100000000000000000000
@@ -23,15 +32,18 @@ return function (x,y)
     return cords
   end
 
-  function enemy.walk_movement(self, dt, speed)
-    
-    local nearest = self:nearestPlayer()
-    if nearest then
-      local dir = point_direction(self.x, self.y, nearest.x, nearest.y)
-
-      self.x = self.x + math.cos(dir) * speed
-      self.y = self.y + math.sin(dir) * speed
+  function enemy.update(self, dt)
+    self:extra_update(dt)
+    enemy.action_timer = enemy.action_timer - dt
+    if enemy.action_timer < 0 then
+      enemy:timer_action()
     end
+  end
+
+  function enemy.walk_movement(self, dt)
+    self.x = self.x + self.delta_x * self.speed
+    self.y = self.y + self.delta_y * self.speed
+    self:finalize_motion()
   end
 
   function enemy.draw(self, dt)
