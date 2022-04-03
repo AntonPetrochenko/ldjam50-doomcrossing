@@ -82,7 +82,7 @@ local fupgrades = {
 
     player.stash = player.weapon
     player.weapon = shotgun()
-    player.wpnbonustimer = 5
+    player.wpnbonustimer = 10
     
   end
 }

@@ -6,7 +6,7 @@ return function (x,y)
   enemy.y = y
   enemy.z = 0
 
-  enemy.health = 5
+  enemy.health = 3
 
   enemy.is_enemy = true
 

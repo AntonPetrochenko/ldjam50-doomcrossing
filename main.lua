@@ -213,7 +213,9 @@ function restartGame()
         spawner.restart()
         for i,v in pairs(joysticks) do
             v.available = true
-            world:del(v.player)
+            if v.player then
+                world:del(v.player)
+            end
             v.playerobj = false
         end
         needRestart = true
