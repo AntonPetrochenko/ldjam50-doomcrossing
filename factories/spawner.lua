@@ -1,15 +1,59 @@
-local player_xy_enemy_factory = require 'factories.player_xy_enemy'
-local random_xy_enemy_factory = require 'factories.random_xy_enemy'
-local shooting_enemy_factory = require 'factories.shooting_enemy'
+local left_border = -160
+local right_border = 620
+local bottom_border = 180
 
-local left_border = -140
-local right_border = 600
+local gameTimer = 0
+
+local enemy_spawnTimer = 0
+local enemy_spawnrate_inc = 0.8
+local enemy_spawnDuration = 10
+local enemy_1_factory = require 'factories.player_xy_enemy'
+local enemy_2_factory = require 'factories.ebabat_enemy'
+local enemy_3_factory = require 'factories.random_xy_enemy'
+local enemy_4_factory = require 'factories.shooting_enemy'
+
+local function spawn_enemy_1()
+    world:add(enemy_1_factory(math.random(left_border, right_border), bottom_border))
+end
+local function spawn_enemy_2()
+    world:add(enemy_2_factory(math.random(left_border, right_border), 130))
+end
+local function spawn_enemy_3()
+    world:add(enemy_1_factory(math.random(left_border, right_border), bottom_border))
+end
+local function spawn_enemy_4()
+    world:add(enemy_2_factory(math.random(left_border, right_border), 130))
+end
+
+local function spawn()
+    local hui = math.random(1, 4)
+    if hui == 1 then
+        spawn_enemy_1()
+    elseif hui == 2 then
+        spawn_enemy_2()
+    elseif hui == 3 then
+        spawn_enemy_3()
+    elseif hui == 4 then
+        spawn_enemy_4()
+    end
+            
+end
 
 return {
-    update = function()
-        if love.keyboard.isDown('9') then
-            world:add(shooting_enemy_factory(100,100))
+    update = function(dt)
+        gameTimer = gameTimer + dt
+        enemy_spawnTimer = enemy_spawnTimer + dt
+        if enemy_spawnTimer > (enemy_spawnDuration * math.pow(enemy_spawnrate_inc, gameTimer)) then
+            enemy_spawnTimer = 0
+            spawn()
         end
+
+        if love.keyboard.isDown('9') then
+            spawn()
+        end
+    end,
+    restart = function()
+        gameTimer = 0
     end,
 
     fuck = '2423',

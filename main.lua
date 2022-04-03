@@ -2,7 +2,6 @@ sounds = require 'sounds'
 sharedstates = require 'sharedstates'
 upgrade = require 'factories.upgrade_factory'
 
-
 worldMaker = require 'oo'
 spawner = require 'factories.spawner'
 
@@ -14,6 +13,8 @@ hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
+local gameTimer = 0
+local needRestart = false
 
 local rumbler = require 'rumbler'
 
@@ -149,9 +150,12 @@ function love.update(dt)
     if love.keyboard.isDown('q') then
         debug.debug()
     end
-    spawner.update(world, dt)
+    gameTimer = gameTimer + dt
+    if gameTimer > 1 then
+        spawner.update(dt)
+    end
     for i,v in pairs(joysticks) do
-        if v.available and v.instance:isGamepadDown("start") then
+        if v.available and v.instance:isGamepadDown("start") and gameTimer < 10 then
             v.available = false
             local np = player_factory(v,spawnpos,100)
             v.player = np
@@ -161,6 +165,7 @@ function love.update(dt)
             v.playerobj = np
             np.team = i
             np.frames = bum_frames[i]
+            needRestart = true
         end
 
         if v.playerobj and v.playerobj.health < 1 then
@@ -177,6 +182,40 @@ function love.update(dt)
     world:update(dt)
 
     rumbler.update(dt)
+
+    check_players_alive()
+    if love.keyboard.isDown('5') then
+        restartGame()
+    end
+end
+
+function check_players_alive()
+    local alivePlayers = 0
+    for i,v in pairs(joysticks) do
+        if not v.available then
+            alivePlayers = alivePlayers + 1
+        end
+    end
+    if alivePlayers == 0 then
+        restartGame()
+    end
+end
+function restartGame()
+    for i,v in pairs(world.objects) do
+        if v.is_enemy == true then 
+            world:del(v)
+        end
+    end
+    gameTimer = 0
+    if needRestart then
+        spawner.restart()
+        for i,v in pairs(joysticks) do
+            v.available = true
+            world:del(v.player)
+            v.playerobj = false
+        end
+        needRestart = true
+    end
 end
 
 function love.draw()
