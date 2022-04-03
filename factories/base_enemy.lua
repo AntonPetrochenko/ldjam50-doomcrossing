@@ -4,6 +4,8 @@ return function (x,y)
   enemy.y = y
   enemy.z = 0
 
+  enemy.is_enemy = true
+
   enemy.collides = true
   enemy.pw = 24
   enemy.ph = 32
