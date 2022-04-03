@@ -3,12 +3,13 @@ sharedstates = require 'sharedstates'
 worldMaker = require 'oo'
 
 world = worldMaker()
-rumbles = worldMaker()
 
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
+
+local rumbler = require 'rumbler'
 
 function point_direction(x1,y1,x2,y2)
     return math.atan2(y2-y1,x2-x1)
@@ -121,11 +122,17 @@ bum_frames[5] = {
 
 joysticks = {}
 for i,v in ipairs(love.joystick.getJoysticks()) do
-    joysticks[i] = {
-        available = true,
-        instance = v,
-        playerobj = false
-    }
+
+    if (v:getName() ~= 'Bluetooth LE XINPUT compatible input device') then
+        joysticks[#joysticks+1] = {
+            available = true,
+            instance = v,
+            playerobj = false
+        }
+    end
+    
+
+    print()
 end
 
 function love.load() 
@@ -161,6 +168,8 @@ function love.update(dt)
         end
     end
     world:update(dt)
+
+    rumbler.update(dt)
 end
 
 function love.draw()

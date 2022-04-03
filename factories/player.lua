@@ -1,4 +1,5 @@
-bullet = require 'factories.bullet'
+local bullet = require 'factories.bullet'
+local rumbler = require 'rumbler'
 
 return function (joyrecord,x,y)
     local player = {}
@@ -37,7 +38,9 @@ return function (joyrecord,x,y)
         number = 10,
         damage = 1,
 
-        rate = 1
+        rate = 1,
+        rumble_strength = 0.5,
+                rumble_duration = 0.1
     }
 
     player.on_collision = function (self, other)
@@ -114,10 +117,10 @@ return function (joyrecord,x,y)
 
                     world:add(bullet(self.x+self.shoot_x, self.y+self.shoot_y, spread_velocity, self.weapon.damping, spread_angle, self.weapon.cut))
                 end
+                rumbler.run(self.team, self.weapon.rumble_strength, self.weapon.rumble_duration)
             end
         end
 
-        self.joy:setVibration(ax6)
     end
 
     -- state normal
@@ -137,14 +140,17 @@ return function (joyrecord,x,y)
                 number = 10,
                 damage = 1,
         
-                rate = 1
+                rate = 1,
+
+                rumble_strength = 0.5,
+                rumble_duration = 0.5
             }
         end
         if self.joy:isGamepadDown("y") then
             player.weapon = {
-                impulse = 5,
+                impulse = 7,
                 damping = 1,
-                cut = 0.15,
+                cut = 0.2,
         
                 spread = 1,
                 spray = 0.1,
@@ -152,7 +158,9 @@ return function (joyrecord,x,y)
                 number = 0,
                 damage = 1,
         
-                rate = 0.1
+                rate = 0.1,
+                rumble_strength = 0.5,
+                rumble_duration = 0.1
             }
         end
         if self.joy:isGamepadDown("a") then
@@ -167,7 +175,9 @@ return function (joyrecord,x,y)
                 number = 10,
                 damage = 1,
         
-                rate = 1
+                rate = 1,
+                rumble_strength = 0.5,
+                rumble_duration = 0.1
             }
         end
         if self.joy:isGamepadDown("b") then
@@ -182,7 +192,9 @@ return function (joyrecord,x,y)
                 number = 0,
                 damage = 1,
         
-                rate = 0.1
+                rate = 0.1,
+                rumble_strength = 0.5,
+                rumble_duration = 0.1
             }
         end
 
