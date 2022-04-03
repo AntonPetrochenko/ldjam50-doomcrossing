@@ -144,7 +144,7 @@ function love.update(dt)
     if love.keyboard.isDown('q') then
         debug.debug()
     end
-    spawner.update(world, dt)
+    spawner.update(dt)
     for i,v in pairs(joysticks) do
         if v.available and v.instance:isGamepadDown("start") then
             v.available = false
