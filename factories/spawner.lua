@@ -5,7 +5,7 @@ local bottom_border = 180
 local gameTimer = 0
 
 local enemy_spawnTimer = 0
-local enemy_spawnrate_inc = 0.8
+local enemy_spawnrate_inc = 0.95
 local enemy_spawnDuration = 10
 local enemy_1_factory = require 'factories.player_xy_enemy'
 local enemy_2_factory = require 'factories.ebabat_enemy'
@@ -19,10 +19,10 @@ local function spawn_enemy_2()
     world:add(enemy_2_factory(math.random(left_border, right_border), 130))
 end
 local function spawn_enemy_3()
-    world:add(enemy_1_factory(math.random(left_border, right_border), bottom_border))
+    world:add(enemy_3_factory(math.random(left_border, right_border), bottom_border))
 end
 local function spawn_enemy_4()
-    world:add(enemy_2_factory(math.random(left_border, right_border), 130))
+    world:add(enemy_4_factory(math.random(left_border, right_border), 130))
 end
 
 local function spawn()
@@ -49,11 +49,18 @@ return {
         end
 
         if love.keyboard.isDown('9') then
-<<<<<<< HEAD
-            world:add(shooting_enemy_factory(100,100))
-=======
             spawn()
->>>>>>> 5fa97975d96e712b41d1700e7dcec286dced9cb4
+        if love.keyboard.isDown('1') then
+            spawn_enemy_1()
+        end
+        if love.keyboard.isDown('2') then
+            spawn_enemy_2()
+        end
+        if love.keyboard.isDown('3') then
+            spawn_enemy_3()
+        end
+        if love.keyboard.isDown('4') then
+            spawn_enemy_4()
         end
     end,
     restart = function()
