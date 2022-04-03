@@ -75,14 +75,14 @@ local fupgrades = {
 
     player.stash = player.weapon
     player.weapon = minigun()
-    player.wpnbonustimer = 10
+    player.wpnbonustimer = 5
   end,
   shotgun = function(player)
     local weapon = player.weapon
 
     player.stash = player.weapon
     player.weapon = shotgun()
-    player.wpnbonustimer = 10
+    player.wpnbonustimer = 5
     
   end
 }

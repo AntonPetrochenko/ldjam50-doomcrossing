@@ -175,6 +175,7 @@ return function (joyrecord,x,y)
         if (player.stash and player.wpnbonustimer < 0) then
             print('bonus expired')
             player.weapon = player.stash
+            player.stash = nil
         end
 
         if self.x < -140 then
