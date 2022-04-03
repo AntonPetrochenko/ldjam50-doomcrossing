@@ -1,9 +1,14 @@
 sounds = require 'sounds'
 sharedstates = require 'sharedstates'
+upgrade = require 'factories.upgrade_factory'
+
+
 worldMaker = require 'oo'
 spawner = require 'factories.spawner'
 
 world = worldMaker()
+
+world:add(upgrade(0,150))
 
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
@@ -31,7 +36,7 @@ camgoal = 0
 camx = 0
 
 screenCanvas = love.graphics.newCanvas(160*2,90*2)
---love.graphics.setDefaultFilter("nearest")
+love.graphics.setDefaultFilter("nearest")
 screenCanvas:setFilter("nearest","nearest")
 
 local bum_frames = {}

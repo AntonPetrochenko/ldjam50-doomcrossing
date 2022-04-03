@@ -18,6 +18,11 @@ return function ()
             end)
             for i,v in pairs(self.objects) do
                 v:draw(dt)
+                if v.collides then
+                    local x,y,w,h = physicsWorld:getRect(v)
+
+                    love.graphics.rectangle('line',x,y,w,h)
+                end
             end
         end,
         add = function(self,new)
@@ -35,9 +40,13 @@ return function ()
                 end
     
                 new.finalize_motion = function (x,y)
-                    local actualX, actualY = physicsWorld:move(new, new.x, new.y, function (item, other) 
-                        return other:on_collision(item)
-                    end )
+                    local actualX, actualY, cols = physicsWorld:move(new, new.x, new.y, function () return 'cross' end )
+
+                    dump(cols)
+                    for i,v in pairs(cols)  do
+                        print('col')
+                        v.item.on_collision(v.item, v.other)
+                    end
                     new.x, new.y = actualX, actualY
                 end
     

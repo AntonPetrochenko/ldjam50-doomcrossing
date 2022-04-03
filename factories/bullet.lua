@@ -3,7 +3,7 @@ local gradient = require 'gradient_mesh'
 local bullet_gradient = gradient('horizontal', {0.5,0,0,0},{1,0,0,1}, {1,1,0,1}, {1,1,1,1}, {1,1,1,1})
 
 return function (x,y,vel, damping, angle, cut)
-  new_bullet = {}
+  local new_bullet = {}
 
   new_bullet.x = x
   new_bullet.y = y
