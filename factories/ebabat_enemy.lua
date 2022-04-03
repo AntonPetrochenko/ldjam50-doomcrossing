@@ -20,7 +20,11 @@ return function (...)
       self.delta_x = -1
       self.delta_y = 0
     end
-  end 
+  end
+
+  function new_enemy.draw(self)
+    love.graphics.draw(drawable,self.x,self.y)
+  end
 
   function new_enemy.timer_action(self)
     self.action_timer = 100000000000
