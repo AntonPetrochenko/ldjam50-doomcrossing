@@ -45,9 +45,18 @@ end
 
 return {
     update = function(dt)
+        if gameTimer > 60 then
+            gameTimer = 20
+        end
         gameTimer = gameTimer + dt
         enemy_spawnTimer = enemy_spawnTimer + dt
-        if enemy_spawnTimer > (enemy_spawnDuration * math.pow(enemy_spawnrate_inc, gameTimer)) then
+        local alivePlayers = 0
+        for i,v in pairs(joysticks) do
+            if not v.available then
+                alivePlayers = alivePlayers + 1
+            end
+        end
+        if enemy_spawnTimer > (enemy_spawnDuration * math.pow(enemy_spawnrate_inc, gameTimer) * math.pow(0.8, alivePlayers - 1)) then
             enemy_spawnTimer = 0
             spawn()
         end

@@ -7,9 +7,9 @@ spawner = require 'factories.spawner'
 
 world = worldMaker()
 
-world:add(upgrade(0,130,'shotgun'))
+--world:add(upgrade(0,130,'shotgun'))
 
-world:add(upgrade(30,130,'minigun'))
+--world:add(upgrade(30,130,'minigun'))
 
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
@@ -204,7 +204,7 @@ function check_players_alive()
 end
 function restartGame()
     for i,v in pairs(world.objects) do
-        if v.is_enemy == true then 
+        if v.is_enemy == true then
             world:del(v)
         end
     end

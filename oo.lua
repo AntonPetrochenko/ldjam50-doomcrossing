@@ -21,7 +21,7 @@ return function ()
                 if v.collides then
                     local x,y,w,h = physicsWorld:getRect(v)
 
-                    love.graphics.rectangle('line',x,y,w,h)
+                    --love.graphics.rectangle('line',x,y,w,h)
                 end
             end
         end,

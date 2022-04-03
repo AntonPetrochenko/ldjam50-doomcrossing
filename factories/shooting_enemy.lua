@@ -13,9 +13,9 @@ return function (...)
   new_enemy.shoot_x = 24/2
   new_enemy.shoot_y = 32/2
   new_enemy.weapon = {
-    impulse = 2,
+    impulse = 3,
     damping = 1,
-    cut = 0.1,
+    cut = 0.2,
 
     spread = 1,
     spray = 0.1,

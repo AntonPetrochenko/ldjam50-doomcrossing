@@ -14,7 +14,7 @@ return function (x,y,vel, damping, angle, cut)
 
   new_bullet.vel = vel --p do p
 
-  new_bullet.is_bullet = true
+  new_bullet.is_enemy = true
 
   new_bullet.collides = true
   new_bullet.pw = 8
