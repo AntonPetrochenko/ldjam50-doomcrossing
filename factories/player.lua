@@ -35,16 +35,17 @@ return function (joyrecord,x,y)
         spread = 1,
         spray = 0.1,
 
-        number = 0,
+        number = 1,
         damage = 1,
 
         rate = 0.3,
         rumble_strength = 0.5,
-        rumble_duration = 0.1
+        rumble_duration = 0.1,
+
+        spread_amount = 1.2
     }
 
     player.on_collision = function (self, other)
-        print('collision happening')
     end
 
     player.isplayer = true
@@ -104,7 +105,7 @@ return function (joyrecord,x,y)
             if ax6 > -0.5 then
                 player.fire_timer = -self.weapon.rate
 
-                for i=0,self.weapon.number do 
+                for i=1,self.weapon.number do 
                     local target_x = self.x + ax4
                     local target_y = self.y + ax5
 
@@ -113,7 +114,7 @@ return function (joyrecord,x,y)
 
                     local aim_angle = math.atan2(target_y-self_y,target_x-self_x)
                     local spread_angle = aim_angle + (math.random()-0.5)*self.weapon.spray
-                    local spread_velocity = self.weapon.impulse - math.random()*self.weapon.spread
+                    local spread_velocity = self.weapon.impulse - (math.random()-0.5)*self.weapon.spread
 
 
                     world:add(bullet(self.x+self.shoot_x, self.y+self.shoot_y, spread_velocity, self.weapon.damping, spread_angle, self.weapon.cut))

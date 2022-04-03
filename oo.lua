@@ -41,10 +41,7 @@ return function ()
     
                 new.finalize_motion = function (x,y)
                     local actualX, actualY, cols = physicsWorld:move(new, new.x, new.y, function () return 'cross' end )
-
-                    dump(cols)
                     for i,v in pairs(cols)  do
-                        print('col')
                         v.item.on_collision(v.item, v.other)
                     end
                     new.x, new.y = actualX, actualY

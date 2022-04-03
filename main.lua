@@ -8,7 +8,11 @@ spawner = require 'factories.spawner'
 
 world = worldMaker()
 
-world:add(upgrade(0,150))
+for i=0,2 do world:add(upgrade(0+i*30,150,'shotgun')) end
+for i=3,5 do world:add(upgrade(0+i*30,150,'minigun')) end
+for i=6,9 do world:add(upgrade(0+i*30,150,'rate')) end
+for i=10,13 do world:add(upgrade(0+i*30,150,'double')) end
+for i=14,17 do world:add(upgrade(0+i*30,150,'far')) end
 
 hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
@@ -141,7 +145,7 @@ for i,v in ipairs(love.joystick.getJoysticks()) do
     print()
 end
 
-function love.load() 
+function love.load()
     world:add(picture_factory(-320,0,"/assets/backdrop.png"))
 end
 
