@@ -6,6 +6,8 @@ return function (...)
   local new_enemy = base_enemy(...)
 
   new_enemy.class = 'random_user_xy'
+  new_enemy.pw = 25
+  new_enemy.ph = 29
 
   function new_enemy.extra_update(self, dt)
     self:walk_movement(dt)
