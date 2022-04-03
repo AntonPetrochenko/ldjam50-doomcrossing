@@ -1,5 +1,7 @@
 local base_enemy = require('factories.base_enemy')
 
+local drawable = love.graphics.newImage('/assets/shooter.png')
+
 return function (...)
   local new_enemy = base_enemy(...)
 
@@ -8,6 +10,10 @@ return function (...)
   function new_enemy.extra_update(self, dt)
     self:walk_movement(dt)
   end 
+
+  function new_enemy.draw(self)
+    love.graphics.draw(drawable,self.x,self.y)
+  end
 
   function new_enemy.timer_action(self)
     self.speed = 0.5
@@ -26,4 +32,5 @@ return function (...)
     end
   end
   return new_enemy
+  
 end
