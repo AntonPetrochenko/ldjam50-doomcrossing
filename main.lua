@@ -263,9 +263,8 @@ function love.draw()
             local str = string.format(
 [[PLAYER %d
 HEALTH: %d
-SCORE: %d
 SELECT TO LEAVE
-]],i,joystick.playerobj.health, joystick.playerobj.score)
+]],i,joystick.playerobj.health)
             love.graphics.setColor(0,0,0,1)
             for xi=-5,5 do
                 for yi=-5,5 do
