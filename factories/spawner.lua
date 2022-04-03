@@ -27,7 +27,7 @@ local function spawn_enemy_3()
     world:add(enemy_3_factory(math.random(left_border, right_border), bottom_border))
 end
 local function spawn_enemy_4()
-    world:add(enemy_4_factory(math.random(left_border, right_border), 130))
+    world:add(enemy_4_factory(math.random(left_border, right_border), bottom_border))
 end
 
 local function spawn()
