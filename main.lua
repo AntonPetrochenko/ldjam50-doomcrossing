@@ -4,6 +4,7 @@ upgrade = require 'factories.upgrade_factory'
 
 
 worldMaker = require 'oo'
+spawner = require 'factories.spawner'
 
 world = worldMaker()
 
@@ -13,7 +14,6 @@ hitbox = require 'hitbox.hitbox'
 local punchable = require 'factories.punchable'
 local player_factory = require 'factories.player'
 local picture_factory = require 'factories.pictureobject'
-local enemy_factory = require 'factories.bird_enemy'
 
 local rumbler = require 'rumbler'
 
@@ -149,9 +149,7 @@ function love.update(dt)
     if love.keyboard.isDown('q') then
         debug.debug()
     end
-    if love.keyboard.isDown('9') then
-        world:add(enemy_factory())
-    end
+    spawner.update(world, dt)
     for i,v in pairs(joysticks) do
         if v.available and v.instance:isGamepadDown("start") then
             v.available = false
