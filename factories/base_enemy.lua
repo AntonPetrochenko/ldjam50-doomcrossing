@@ -1,4 +1,5 @@
 local upgrade = require 'factories.upgrade_factory'
+local collider = require 'enemy_collider'
 
 return function (x,y)
   local enemy = {}
@@ -53,30 +54,7 @@ return function (x,y)
     end
   end
 
-  function enemy.on_collision(self, other)
-    if other.is_bullet then
-      other.is_bullet = false
-      other.damping = 0.3
-      self.health = self.health - 1
-    end
-
-    if other.is_player then
-
-      other.knockvx = self.delta_x
-      other.knockvz = 1
-
-      
-      other.stamina = other.stamina - 1
-      print(other.stamina .. '> 0', other.stamina > 0)
-      if other.stamina > 0 then
-        
-          other:setstate("hit1")
-      else
-          other:setstate("knockover")
-      end
-      world:del(self)
-    end
-  end
+  enemy.on_collision = collider
 
   function enemy.walk_movement(self, dt)
     self.x = self.x + self.delta_x * self.speed

@@ -15,6 +15,7 @@ function sharedstates.create_update_states()
             self:setstate("down")
             self.stamina = 3
         end
+        self:finalize_motion()
     end
 
     function new_update_states.down(self,dt)

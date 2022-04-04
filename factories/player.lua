@@ -110,8 +110,8 @@ return function (joyrecord,x,y)
                 player.fire_timer = -self.weapon.rate
 
                 for i=1,self.weapon.number do 
-                    local target_x = self.x + ax4
-                    local target_y = self.y + ax5
+                    local target_x = self.x + ax3
+                    local target_y = self.y + ax4
 
                     local self_x = self.x
                     local self_y = self.y

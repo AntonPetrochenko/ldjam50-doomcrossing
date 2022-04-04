@@ -138,6 +138,7 @@ for i,v in ipairs(love.joystick.getJoysticks()) do
             instance = v,
             playerobj = false
         }
+        print(v:getName())
     end
     
 

@@ -21,7 +21,7 @@ return function (...)
     self.action_timer = 5
     self.speed = 0.5
       if math.random(0, 100) > 80 then
-        self.speed = 1.5
+        self.speed = 1
         local nearest = self:nearestPlayer()
         if nearest then
           local dir = point_direction(self.x, self.y, nearest.x, nearest.y)
